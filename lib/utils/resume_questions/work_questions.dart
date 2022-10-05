@@ -11,25 +11,28 @@ const Map<String, dynamic> workQuestions = {
   },
   'lineColor': greenLines,
   'icon': "",
-  'progress': 0.7,
   'questions': [
     {
-      'id': "test1",
-      'question': "Вкажіть ваше ім'я та прізвище",
+      'id': "1",
+      'type': 'basic',
+      'question': "Вкажіть посаду, на якій ви працювали",
     },
     {
-      'id': "test2",
-      'question': "Вкажіть ваш номер телефону",
+      'id': "2",
+      'type': 'basic',
+      'question': "Вкажіть назву компанії або роботодавця",
       'help':
           "Тут тобі потрібно ввести номер мобільного телефону, щоб роботодавець міг з тобою зв’язатися.",
     },
     {
       'id': "test3",
-      'question': "Вкажіть ваш e-mail",
+      'type': 'dropdown',
+      'question': "Коли ви почали там працювати?",
     },
     {
       'id': "test4",
-      'question': "Оберіть мови, якими ви володієте",
+      'type': 'dropdown',
+      'question': "Коли ви закінчили там працювати?",
     },
     {
       'id': "test5",

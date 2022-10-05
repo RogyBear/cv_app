@@ -1,5 +1,6 @@
 import 'package:cv_app/components/fox_head.dart';
 import 'package:cv_app/components/question_templates/basic_question.dart';
+import 'package:cv_app/components/question_templates/dropdown_question.dart';
 import 'package:cv_app/components/question_templates/select_question.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -96,7 +97,12 @@ class _QuestionsState extends State<Questions> {
                               data: data['data'],
                             );
                           case 'dropdown':
-                            break;
+                            return Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: DropdownQuestion(
+                                data: data['data'],
+                              ),
+                            );
                           case 'select':
                             return SelectQuestion(
                               data: data['data'],
