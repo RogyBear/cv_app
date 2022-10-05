@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
-const educationQuestions = {
+const Map<String, dynamic> titleQuestions = {
   'id': "2",
   'title': "Освіта",
   'key': title,

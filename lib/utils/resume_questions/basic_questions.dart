@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../constants.dart';
 
 const Map<String, dynamic> basicQuestions = {
@@ -7,9 +5,9 @@ const Map<String, dynamic> basicQuestions = {
   "key": basicInfo,
   "title": "Базова інформація",
   "palette": {
-    "primary": [Color(0xFF65ADEE), Color(0xFF3599F3)],
-    "secondary": Color(0xFFEBF5FF),
-    "tertiary": Color(0xFFDBECFE)
+    "primary": blueGradient,
+    "secondary": blueSecondary,
+    "tertiary": blueTertiary
   },
   "icon": "",
   "questions": [

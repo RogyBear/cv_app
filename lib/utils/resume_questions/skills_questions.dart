@@ -1,15 +1,13 @@
-import 'package:flutter/material.dart';
-
 import '../constants.dart';
 
-const educationQuestions = {
+const Map<String, dynamic> skillsQuestions = {
   'id': "2",
-  'title': "Освіта",
+  'title': "Навички",
   'key': skills,
   'palette': {
-    'primary': [Color(0xFFFED255), Color(0xFFF4BF2A)],
-    'secondary': Color(0xFFFFF4E1),
-    'tertiary': Color(0xFFFFF0C6)
+    'primary': blueGradient,
+    'secondary': blueSecondary,
+    'tertiary': blueTertiary
   },
   'icon': "",
   'progress': 0.7,
