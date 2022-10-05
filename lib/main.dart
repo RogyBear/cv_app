@@ -1,7 +1,8 @@
-import 'package:cv_app/screens/PDFView.dart';
 import 'package:cv_app/screens/home.dart';
 import 'package:cv_app/screens/navigation.dart';
+import 'package:cv_app/screens/pdf_view.dart';
 import 'package:cv_app/screens/questions.dart';
+import 'package:cv_app/screens/settings.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/navigation': (context) => Navigation(key: key),
         '/questions': (context) => Questions(key: key),
         '/pdfView': (context) => PDFView(key: key),
+        '/settings': (context) => Settings(key: key),
       },
     );
   }

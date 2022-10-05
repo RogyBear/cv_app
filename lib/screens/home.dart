@@ -1,3 +1,4 @@
+import 'package:cv_app/components/fox_head.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -13,32 +14,46 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        // elevation: 0,
-        // backgroundColor: Colors.white,
-        title: const Text(
-          'test',
-          style: TextStyle(color: Colors.black),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: GestureDetector(
-              onTap: () => {print('ok')},
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FoxHead(),
+            Text(
+              'Створити документ',
+              style: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: 17,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/settings');
+              },
               child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.amber,
+                height: 45,
+                width: 45,
+                decoration: BoxDecoration(
+                  color: Color(0xFFF7F7F8),
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
                   ),
                 ),
-                width: 60,
-                child: const Center(
-                  child: Text('ok'),
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: SvgPicture.asset(
+                    'assets/images/cog.svg',
+                    width: MediaQuery.of(context).size.width,
+                  ),
                 ),
               ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),

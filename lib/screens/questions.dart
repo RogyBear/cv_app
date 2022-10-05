@@ -1,3 +1,4 @@
+import 'package:cv_app/components/fox_head.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -64,16 +65,7 @@ class _QuestionsState extends State<Questions> {
                 // progressColor: LinearGradient(),
               ),
             ),
-            const SizedBox(
-              height: 55,
-              width: 55,
-              child: Image(
-                image: AssetImage(
-                  'assets/images/foxHead.png',
-                ),
-                fit: BoxFit.cover,
-              ),
-            )
+            FoxHead()
           ],
         ),
       ),

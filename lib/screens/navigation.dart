@@ -1,3 +1,5 @@
+import 'package:cv_app/components/custom_back_button.dart';
+import 'package:cv_app/components/fox_head.dart';
 import 'package:cv_app/utils/resume_questions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,40 +24,12 @@ class _NavigationState extends State<Navigation> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              height: 45,
-              width: 45,
-              decoration: BoxDecoration(
-                color: Color(0xFFF7F7F8),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(13),
-                child: SvgPicture.asset(
-                  'assets/images/backArrow.svg',
-                  // alignment: const Alignment(0, 1),
-                  width: MediaQuery.of(context).size.width,
-                  // color: const Color(0xFFE5F2FF).withOpacity(.2),
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
+            CustomBackButton(),
             Text(
               'Резюме',
               style: TextStyle(color: Colors.black),
             ),
-            const SizedBox(
-              height: 55,
-              width: 55,
-              child: Image(
-                image: AssetImage(
-                  'assets/images/foxHead.png',
-                ),
-                fit: BoxFit.cover,
-              ),
-            )
+            FoxHead()
           ],
         ),
       ),
