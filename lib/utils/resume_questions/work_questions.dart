@@ -9,6 +9,7 @@ const Map<String, dynamic> workQuestions = {
     'secondary': greenSecondary,
     'tertiary': greenTertiary
   },
+  'lineColor': greenLines,
   'icon': "",
   'progress': 0.7,
   'questions': [

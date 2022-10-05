@@ -1,16 +1,15 @@
-import 'package:flutter/material.dart';
-
 import '../constants.dart';
 
 const Map<String, dynamic> titleQuestions = {
   'id': "2",
-  'title': "Освіта",
+  'title': "Заголовок",
   'key': title,
   'palette': {
-    'primary': [Color(0xFFFED255), Color(0xFFF4BF2A)],
-    'secondary': Color(0xFFFFF4E1),
-    'tertiary': Color(0xFFFFF0C6)
+    'primary': blueGradient,
+    'secondary': blueSecondary,
+    'tertiary': blueTertiary
   },
+  'lineColor': blueLines,
   'icon': "",
   'progress': 0.7,
   'questions': [

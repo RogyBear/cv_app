@@ -1,4 +1,6 @@
 import 'package:cv_app/components/fox_head.dart';
+import 'package:cv_app/components/question_templates/basic_question.dart';
+import 'package:cv_app/components/question_templates/select_question.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -11,7 +13,7 @@ class Questions extends StatefulWidget {
 }
 
 class _QuestionsState extends State<Questions> {
-  final PageController _controller = PageController(
+  PageController _controller = PageController(
     initialPage: 0,
   );
 
@@ -62,34 +64,137 @@ class _QuestionsState extends State<Questions> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: data['data']['palette']['primary']),
-                // progressColor: LinearGradient(),
               ),
             ),
             FoxHead()
           ],
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                  controller: _controller,
-                  itemCount: data['data']['questions'].length,
-                  itemBuilder: (context, index) {
-                    // HERE IS WHERE THE SWITCH STATEMENT GOES
-                    return Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      width: MediaQuery.of(context).size.width,
-                      child: Text(data['data']['questions'][index]['question']),
-                    );
-                  }),
+      body: Stack(
+        children: [
+          SvgPicture.asset(
+            'assets/images/questionsBg.svg',
+            alignment: const Alignment(0, 1),
+            color: data['data']['lineColor'],
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
+          ),
+          SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: PageView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: _controller,
+                      itemCount: data['data']['questions'].length,
+                      itemBuilder: (context, index) {
+                        switch (data['data']['questions'][index]['type']) {
+                          case 'basic':
+                            return BasicQuestion(
+                              question: data['data']['questions'][index]
+                                  ['question'],
+                              data: data['data'],
+                            );
+                          case 'dropdown':
+                            break;
+                          case 'select':
+                            return SelectQuestion(
+                              data: data['data'],
+                              questions: data['data']['questions'][index]
+                                  ['question'],
+                            );
+                          default:
+                            print(data['data']['questions'][index]['type']);
+                            break;
+                        }
+                        // HERE IS WHERE THE SWITCH STATEMENT GOES
+                        return Container(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          width: MediaQuery.of(context).size.width,
+                          child: Text(
+                              data['data']['questions'][index]['question']),
+                        );
+                      }),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: data['data']['palette']['primary'][1],
+                            ),
+                          ),
+                          child: RawMaterialButton(
+                            padding: EdgeInsets.symmetric(vertical: 17),
+                            child: Text(
+                              'Назад',
+                              style: TextStyle(
+                                fontFamily: 'Nunito',
+                                color: data['data']['palette']['primary'][1],
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            onPressed: () {
+                              _controller.animateToPage(
+                                  (_controller.page?.round() ?? 0) - 1,
+                                  duration: Duration(milliseconds: 400),
+                                  curve: Curves.easeOut);
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: data['data']['palette']['primary'],
+                            ),
+                          ),
+                          child: RawMaterialButton(
+                            padding: EdgeInsets.symmetric(vertical: 17),
+                            // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            // shape: RoundedRectangleBorder(
+                            //     borderRadius:
+                            //         BorderRadius.all(Radius.circular(12))),
+                            child: const Text(
+                              'Далі',
+                              style: TextStyle(
+                                fontFamily: 'Nunito',
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            onPressed: () {
+                              _controller.animateToPage(
+                                  (_controller.page?.round() ?? 0) + 1,
+                                  duration: Duration(milliseconds: 400),
+                                  curve: Curves.easeOut);
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
-            Container(
-              child: Text('Buttons go here'),
-            )
-          ],
-        ),
+          ),
+        ],
       ),
 
       // ListView.builder(

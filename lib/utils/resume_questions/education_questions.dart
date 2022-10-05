@@ -9,21 +9,31 @@ const Map<String, dynamic> educationQuestions = {
     'secondary': yellowSecondary,
     'tertiary': yellowTertiary
   },
+  'lineColor': yellowLines,
   'icon': "",
-  'progress': 0.7,
   'questions': [
     {
       'id': "test1",
-      'question': "Вкажіть ваше ім'я та прізвище",
+      "type": "select",
+      'question': [
+        'Університет',
+        'Коледж',
+        'Училище',
+        'Школа',
+        'Курси',
+        'Інше'
+      ],
     },
     {
       'id': "test2",
+      "type": "basic",
       'question': "Вкажіть ваш номер телефону",
       'help':
           "Тут тобі потрібно ввести номер мобільного телефону, щоб роботодавець міг з тобою зв’язатися.",
     },
     {
       'id': "test3",
+      "type": "basic",
       'question': "Вкажіть ваш e-mail",
     },
     {

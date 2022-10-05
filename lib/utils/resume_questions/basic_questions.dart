@@ -9,6 +9,7 @@ const Map<String, dynamic> basicQuestions = {
     "secondary": blueSecondary,
     "tertiary": blueTertiary
   },
+  'lineColor': blueLines,
   "icon": "",
   "questions": [
     {

@@ -1,16 +1,15 @@
-import 'package:flutter/material.dart';
-
 import '../constants.dart';
 
-const Map<String, dynamic> signatureQuestions = {
+const Map<String, dynamic> contentsQuestions = {
   'id': "2",
-  'title': "Освіта",
-  'key': signature,
+  'title': "Основна частина",
+  'key': contents,
   'palette': {
-    'primary': [Color(0xFFFED255), Color(0xFFF4BF2A)],
-    'secondary': Color(0xFFFFF4E1),
-    'tertiary': Color(0xFFFFF0C6)
+    'primary': yellowGradient,
+    'secondary': yellowSecondary,
+    'tertiary': yellowTertiary
   },
+  'lineColor': yellowLines,
   'icon': "",
   'progress': 0.7,
   'questions': [

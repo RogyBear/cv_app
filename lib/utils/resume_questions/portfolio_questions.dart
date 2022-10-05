@@ -9,6 +9,7 @@ const Map<String, dynamic> portfolioQuestions = {
     'secondary': redSecondary,
     'tertiary': redTertiary
   },
+  'lineColor': redLines,
   'icon': "",
   'progress': 0.7,
   'questions': [

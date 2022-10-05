@@ -9,6 +9,7 @@ const Map<String, dynamic> achievementsQuestions = {
     'secondary': yellowSecondary,
     'tertiary': yellowTertiary
   },
+  'lineColor': yellowLines,
   'icon': "",
   'progress': 0.7,
   'questions': [

@@ -20,7 +20,7 @@ class _PDFViewState extends State<PDFView> {
         automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: const [
             CustomBackButton(),
             Text(
               'Переглянути резюме',

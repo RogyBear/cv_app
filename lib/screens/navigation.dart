@@ -1,7 +1,6 @@
 import 'package:cv_app/components/custom_back_button.dart';
 import 'package:cv_app/components/fox_head.dart';
 import 'package:cv_app/utils/constants.dart';
-import 'package:cv_app/utils/resume_questions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -16,6 +15,9 @@ class Navigation extends StatefulWidget {
 class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
+    final data = (ModalRoute.of(context)?.settings.arguments ??
+        <String, dynamic>{}) as Map;
+    print(data['text']);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -27,7 +29,7 @@ class _NavigationState extends State<Navigation> {
           children: [
             CustomBackButton(),
             Text(
-              'Резюме',
+              data['text']['header'],
               style: TextStyle(color: Colors.black),
             ),
             FoxHead()
@@ -42,7 +44,6 @@ class _NavigationState extends State<Navigation> {
                 'assets/images/navBg.svg',
                 alignment: const Alignment(0, 1),
                 width: MediaQuery.of(context).size.width,
-                // color: const Color(0xFFE5F2FF).withOpacity(.2),
                 fit: BoxFit.cover,
               ),
             ),
@@ -67,7 +68,7 @@ class _NavigationState extends State<Navigation> {
                   ),
                   Expanded(
                     child: ListView.separated(
-                      itemCount: resumeQuestions.length,
+                      itemCount: data['data'].length,
                       separatorBuilder: (context, index) => SizedBox(
                         height: 15,
                       ),
@@ -75,12 +76,12 @@ class _NavigationState extends State<Navigation> {
                         return GestureDetector(
                           onTap: () {
                             Navigator.pushNamed(context, '/questions',
-                                arguments: {'data': resumeQuestions[index]});
+                                arguments: {'data': data['data'][index]});
                           },
                           child: Container(
                             padding: const EdgeInsets.all(10.0),
                             decoration: BoxDecoration(
-                                color: resumeQuestions[index]['palette']
+                                color: data['data'][index]['palette']
                                     ['secondary'],
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15))),
@@ -91,8 +92,8 @@ class _NavigationState extends State<Navigation> {
                                     gradient: LinearGradient(
                                         begin: FractionalOffset.topCenter,
                                         end: FractionalOffset.bottomCenter,
-                                        colors: resumeQuestions[index]
-                                            ['palette']['primary'],
+                                        colors: data['data'][index]['palette']
+                                            ['primary'],
                                         stops: [0.0, 1.0]),
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(14),
@@ -110,7 +111,7 @@ class _NavigationState extends State<Navigation> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        resumeQuestions[index]['title'],
+                                        data['data'][index]['title'],
                                         style: TextStyle(
                                             fontFamily: 'Nunito',
                                             fontSize: 17,
@@ -127,7 +128,7 @@ class _NavigationState extends State<Navigation> {
                                         linearGradient: LinearGradient(
                                             begin: Alignment.topCenter,
                                             end: Alignment.bottomCenter,
-                                            colors: resumeQuestions[index]
+                                            colors: data['data'][index]
                                                 ['palette']['primary']),
                                         // progressColor: LinearGradient(),
                                       ),
@@ -163,7 +164,7 @@ class _NavigationState extends State<Navigation> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Переглянути резюме',
+                            data['text']['button'],
                             style: TextStyle(
                               fontFamily: 'Nunito',
                               fontWeight: FontWeight.w500,

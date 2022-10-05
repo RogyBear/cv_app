@@ -9,6 +9,7 @@ const Map<String, dynamic> skillsQuestions = {
     'secondary': blueSecondary,
     'tertiary': blueTertiary
   },
+  'lineColor': blueLines,
   'icon': "",
   'progress': 0.7,
   'questions': [
