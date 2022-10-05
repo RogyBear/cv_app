@@ -18,6 +18,7 @@ const Map<String, dynamic> basicQuestions = {
       "type": "basic",
       "section": "",
       "question": "This is question one",
+      "placeholder": "Наприклад, Тарас Шевченко"
     },
     {
       'id': 1,
@@ -38,7 +39,7 @@ const Map<String, dynamic> basicQuestions = {
     },
     {
       'id': 4,
-      'type': "basic",
+      'type': "select",
       'question': "Додайте своє фото",
     },
     {
