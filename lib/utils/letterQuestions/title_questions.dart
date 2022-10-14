@@ -11,38 +11,28 @@ const Map<String, dynamic> titleQuestions = {
   },
   'lineColor': blueLines,
   'icon': "",
-  'progress': 0.7,
   'questions': [
     {
-      'id': "test1",
+      'id': "1",
+      "type": "basic",
       'question': "Вкажіть ваше ім'я та прізвище",
     },
     {
-      'id': "test2",
+      'id': "2",
+      "type": "basic",
       'question': "Вкажіть ваш номер телефону",
       'help':
           "Тут тобі потрібно ввести номер мобільного телефону, щоб роботодавець міг з тобою зв’язатися.",
     },
     {
-      'id': "test3",
+      'id': "3",
+      "type": "basic",
       'question': "Вкажіть ваш e-mail",
     },
     {
-      'id': "test4",
-      'question': "Оберіть мови, якими ви володієте",
-    },
-    {
-      'id': "test5",
-      'question': "Додайте своє фото",
-    },
-    {
-      'id': "test6",
+      'id': "4",
+      "type": "basic",
       'question': "Вкажіть посаду, на яку ви претендуєте",
-    },
-    {
-      'id': "test7",
-      'question': "Давайте перевіримо ваші відповіді",
-      'confirmation': true,
     },
   ],
 };

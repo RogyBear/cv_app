@@ -14,35 +14,26 @@ const Map<String, dynamic> contentsQuestions = {
   'progress': 0.7,
   'questions': [
     {
-      'id': "test1",
-      'question': "Вкажіть ваше ім'я та прізвище",
+      'id': "1",
+      "type": "basic",
+      'question': "Привітання",
     },
     {
-      'id': "test2",
-      'question': "Вкажіть ваш номер телефону",
+      'id': "2",
+      "type": "basic",
+      'question': "Вступ",
       'help':
           "Тут тобі потрібно ввести номер мобільного телефону, щоб роботодавець міг з тобою зв’язатися.",
     },
     {
-      'id': "test3",
-      'question': "Вкажіть ваш e-mail",
+      'id': "3",
+      "type": "basic",
+      'question': "Основна частина",
     },
     {
-      'id': "test4",
-      'question': "Оберіть мови, якими ви володієте",
-    },
-    {
-      'id': "test5",
-      'question': "Додайте своє фото",
-    },
-    {
-      'id': "test6",
-      'question': "Вкажіть посаду, на яку ви претендуєте",
-    },
-    {
-      'id': "test7",
-      'question': "Давайте перевіримо ваші відповіді",
-      'confirmation': true,
+      'id': "4",
+      "type": "basic",
+      'question': "Заключна частина",
     },
   ],
 };

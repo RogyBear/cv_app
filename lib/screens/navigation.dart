@@ -1,9 +1,11 @@
 import 'package:cv_app/components/custom_back_button.dart';
 import 'package:cv_app/components/fox_head.dart';
+import 'package:cv_app/services/data.dart';
 import 'package:cv_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);
@@ -17,7 +19,7 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     final data = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
-    print(data['text']);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -75,6 +77,7 @@ class _NavigationState extends State<Navigation> {
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           onTap: () {
+                            // TODO
                             Navigator.pushNamed(context, '/questions',
                                 arguments: {'data': data['data'][index]});
                           },
@@ -118,13 +121,22 @@ class _NavigationState extends State<Navigation> {
                                             fontWeight: FontWeight.w500),
                                       ),
                                       LinearPercentIndicator(
+                                        animation: true,
                                         padding: EdgeInsets.only(
                                             left: 0.0, right: 10),
                                         lineHeight: 10.0,
-                                        percent: 0.7,
+                                        percent: Provider.of<Data>(context)
+                                                .progress[data['data'][index]
+                                                    ['key']]
+                                                .toDouble() /
+                                            (data['data'][index]['questions']
+                                                    .length -
+                                                1),
                                         backgroundColor: Colors.white,
                                         barRadius: const Radius.circular(16),
-                                        trailing: Text('100%'),
+                                        trailing: Text(
+                                          '${((Provider.of<Data>(context).progress[data['data'][index]['key']] / (data['data'][index]['questions'].length - 1)) * 100).toInt().toString()} %',
+                                        ),
                                         linearGradient: LinearGradient(
                                             begin: Alignment.topCenter,
                                             end: Alignment.bottomCenter,

@@ -15,13 +15,12 @@ const Map<String, dynamic> basicQuestions = {
     {
       "id": 0,
       "type": "basic",
-      "section": "",
-      "question": "This is question one",
+      "question": "Вкажіть ваше ім'я та прізвище",
     },
     {
       'id': 1,
       'type': "basic",
-      'question': "Question 2",
+      'question': "Вкажіть ваш номер телефону",
       'help':
           "Тут тобі потрібно ввести номер мобільного телефону, щоб роботодавець міг з тобою зв’язатися.",
     },

@@ -1,9 +1,12 @@
 import 'package:cv_app/components/fox_head.dart';
 import 'package:cv_app/components/home_tile.dart';
+import 'package:cv_app/services/data.dart';
 import 'package:cv_app/utils/letterQuestions.dart';
 import 'package:cv_app/utils/resume_questions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,6 +15,30 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final storage = new FlutterSecureStorage();
+  @override
+  void initState() {
+    super.initState();
+    // Call async function to retrieve data here.
+    Provider.of<Data>(context, listen: false).getProgress();
+    // check if value is already in storage
+    // if in storage then pull data,
+    // if not in storage, then init data
+  }
+
+  // void getProgress() async {
+  //   const storage = FlutterSecureStorage();
+  //   await storage.deleteAll();
+  //   String? value = await storage.read(key: 'progress');
+  //   if (value == null) {
+  //     await storage.write(
+  //         key: 'progress',
+  //         value: Provider.of<Data>(context, listen: false).progress.toString());
+  //   }
+  //
+  //   print(value);
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +97,23 @@ class _HomeState extends State<Home> {
             child: ListView(
               children: [
                 HomeTile(
+                  title: RichText(
+                    text: const TextSpan(
+                      text: 'Створіть своє\n',
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w500),
+                      children: [
+                        TextSpan(
+                          text: 'перше ',
+                        ),
+                        TextSpan(
+                            text: 'резюме',
+                            style: TextStyle(fontWeight: FontWeight.w700))
+                      ],
+                    ),
+                  ),
                   text: {
                     'key': 'resume',
                     'header': 'Резюме',
@@ -81,6 +125,20 @@ class _HomeState extends State<Home> {
                 ),
                 const SizedBox(height: 50),
                 HomeTile(
+                  title: RichText(
+                    text: const TextSpan(
+                      text: 'Створіть перший\n',
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w500),
+                      children: [
+                        TextSpan(
+                            text: 'супровідний лист',
+                            style: TextStyle(fontWeight: FontWeight.w700))
+                      ],
+                    ),
+                  ),
                   text: {
                     'key': 'letter',
                     'header': 'Супровідний лист',

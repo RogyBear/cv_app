@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeTile extends StatelessWidget {
+  final Widget title;
   final Map text;
   final List questions;
   final List<Color> colors;
   final AssetImage image;
   HomeTile({
     super.key,
+    required this.title,
     required this.text,
     required this.questions,
     required this.colors,
@@ -38,7 +40,7 @@ class HomeTile extends StatelessWidget {
           ),
           Positioned.fill(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 40),
+              padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 40),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -47,30 +49,12 @@ class HomeTile extends StatelessWidget {
                     children: [
                       Image(
                         image: image,
-                        width: MediaQuery.of(context).size.height / 12,
+                        width: MediaQuery.of(context).size.height / 14,
                       ),
                       const SizedBox(
                         width: 20,
                       ),
-                      RichText(
-                          text: const TextSpan(
-                        text: 'Створіть своє\n',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w500),
-                        children: [
-                          TextSpan(
-                            text: 'перше ',
-                          ),
-                          TextSpan(
-                              text: 'резюме',
-                              style: TextStyle(fontWeight: FontWeight.w600))
-                        ],
-                      )
-
-                          // style: TextStyle(fontSize: 50, color: Colors.white),
-                          )
+                      title
                     ],
                   ),
                   GestureDetector(

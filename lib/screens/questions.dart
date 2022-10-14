@@ -2,9 +2,11 @@ import 'package:cv_app/components/fox_head.dart';
 import 'package:cv_app/components/question_templates/basic_question.dart';
 import 'package:cv_app/components/question_templates/dropdown_question.dart';
 import 'package:cv_app/components/question_templates/select_question.dart';
+import 'package:cv_app/services/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 class Questions extends StatefulWidget {
   const Questions({Key? key}) : super(key: key);
@@ -14,14 +16,18 @@ class Questions extends StatefulWidget {
 }
 
 class _QuestionsState extends State<Questions> {
-  PageController _controller = PageController(
-    initialPage: 0,
-  );
-
   @override
   Widget build(BuildContext context) {
     final data = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
+    final providerProgress =
+        Provider.of<Data>(context).progress[data['data']['key']];
+    PageController _controller = PageController(
+      initialPage:
+          Provider.of<Data>(context).progress[data['data']['key']].toInt(),
+    );
+    print(providerProgress);
+    print(data['data']['questions'].length - 1);
     return Scaffold(
       backgroundColor: data['data']['palette']['secondary'],
       appBar: AppBar(
@@ -56,9 +62,16 @@ class _QuestionsState extends State<Questions> {
             ),
             Expanded(
               child: LinearPercentIndicator(
-                padding: EdgeInsets.only(left: 20.0, right: 15),
+                animateFromLastPercent: true,
+                animation: true,
+                animationDuration: 200,
+                padding: EdgeInsets.only(
+                  left: 20.0,
+                  right: 15,
+                ),
                 lineHeight: 15.0,
-                percent: 1,
+                percent: providerProgress.toDouble() /
+                    (data['data']['questions'].length - 1),
                 backgroundColor: Colors.white,
                 barRadius: const Radius.circular(16),
                 linearGradient: LinearGradient(
@@ -98,7 +111,9 @@ class _QuestionsState extends State<Questions> {
                             );
                           case 'dropdown':
                             return Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
                               child: DropdownQuestion(
                                 data: data['data'],
                               ),
@@ -110,7 +125,7 @@ class _QuestionsState extends State<Questions> {
                                   ['question'],
                             );
                           default:
-                            print(data['data']['questions'][index]['type']);
+                            // print(data['data']['questions'][index]['type']);
                             break;
                         }
                         // HERE IS WHERE THE SWITCH STATEMENT GOES
@@ -148,10 +163,20 @@ class _QuestionsState extends State<Questions> {
                               ),
                             ),
                             onPressed: () {
-                              _controller.animateToPage(
+                              if (providerProgress != 0) {
+                                _controller.animateToPage(
+                                    (_controller.page?.round() ?? 0) - 1,
+                                    duration: const Duration(
+                                      milliseconds: 400,
+                                    ),
+                                    curve: Curves.easeOut);
+
+                                Provider.of<Data>(context, listen: false)
+                                    .updateProgress(
+                                  data['data']['key'],
                                   (_controller.page?.round() ?? 0) - 1,
-                                  duration: Duration(milliseconds: 400),
-                                  curve: Curves.easeOut);
+                                );
+                              }
                             },
                           ),
                         ),
@@ -186,10 +211,20 @@ class _QuestionsState extends State<Questions> {
                               ),
                             ),
                             onPressed: () {
-                              _controller.animateToPage(
+                              if (providerProgress !=
+                                  (data['data']['questions'].length - 1)) {
+                                _controller.animateToPage(
                                   (_controller.page?.round() ?? 0) + 1,
-                                  duration: Duration(milliseconds: 400),
-                                  curve: Curves.easeOut);
+                                  duration: const Duration(milliseconds: 400),
+                                  curve: Curves.easeOut,
+                                );
+
+                                Provider.of<Data>(context, listen: false)
+                                    .updateProgress(
+                                  data['data']['key'],
+                                  (_controller.page?.round() ?? 0) + 1,
+                                );
+                              }
                             },
                           ),
                         ),
