@@ -32,6 +32,7 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   image_picker: ^0.8.6
   shared_preferences: ^2.0.15
+  camera: ^0.10.0+4
 
 dev_dependencies:
   flutter_test:

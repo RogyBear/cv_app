@@ -5,11 +5,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'package:image_picker/image_picker.dart';
+import 'package:camera/camera.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class FileUpload extends StatefulWidget {
@@ -23,7 +23,11 @@ class FileUpload extends StatefulWidget {
 
 class _FileUploadState extends State<FileUpload> {
   final _storage = const FlutterSecureStorage();
-  File? file;
+  late List<CameraDescription> _cameras;
+  late CameraController _cameraController;
+  File? galleryPhoto;
+  XFile? takenPhoto;
+  bool showCameraOptionPopup = false;
 
   Future pickImageFromGallery() async {
     try {
@@ -36,15 +40,84 @@ class _FileUploadState extends State<FileUpload> {
       await _storage.write(key: "photoPath", value: image.path);
 
       final selected = File(image.path);
-      setState(() => file = selected);
+      setState(() => galleryPhoto = selected);
     } on PlatformException catch(e) {
     //  TODO: Handle exception.
     }
   }
 
+  Future<void> displayCameraOptionPopup() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('This is a demo alert dialog.'),
+                Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Take a Photo'),
+              onPressed: activateCamera,
+            ),
+            TextButton(
+              child: const Text('Pick From Gallery'),
+              onPressed: pickImageFromGallery,
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /// Returns a suitable camera icon for [direction].
+  IconData getCameraLensIcon(CameraLensDirection direction) {
+    switch (direction) {
+      case CameraLensDirection.back:
+        return Icons.camera_rear;
+      case CameraLensDirection.front:
+        return Icons.camera_front;
+      case CameraLensDirection.external:
+        return Icons.camera;
+      default:
+        throw ArgumentError('Unknown lens direction');
+    }
+  }
+
   Future<void> _readAll() async {
     String? readFile = await _storage.read(key: "photoPath");
-    file = jsonDecode(readFile!);
+    galleryPhoto = jsonDecode(readFile!);
+  }
+
+  Future<void> activateCamera() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    _cameras = await availableCameras();
+
+    _cameraController = CameraController(_cameras[0], ResolutionPreset.max);
+    _cameraController.initialize().then((_) {
+      // if (!mounted) {
+      //   return;
+      // }
+      setState(() {});
+    }).catchError((Object e) {
+      if (e is CameraException) {
+        switch (e.code) {
+          case 'CameraAccessDenied':
+            print('User denied camera access.');
+            break;
+          default:
+            print(e.description);
+            print('Handle other errors.');
+            break;
+        }
+      }
+    });
   }
 
   @override
@@ -54,7 +127,18 @@ class _FileUploadState extends State<FileUpload> {
   }
 
   @override
+  void dispose() {
+    _cameraController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (_cameraController.value.isInitialized) {
+      return MaterialApp(
+        home: CameraPreview(_cameraController),
+      );
+    }
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -74,7 +158,7 @@ class _FileUploadState extends State<FileUpload> {
           Align(
             alignment: Alignment.center,
             child: RawMaterialButton(
-              onPressed: pickImageFromGallery,
+              onPressed: displayCameraOptionPopup,
               child: Container(
                   width: 250,
                   height: 250,
@@ -86,14 +170,14 @@ class _FileUploadState extends State<FileUpload> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   padding: EdgeInsets.all(3),
-                  child: file?.path != null
+                  child: galleryPhoto?.path != null
                       ? Stack(
                     children: [
                       Positioned(
                           top: 0, bottom: 0, left: 0, right: 0,
                           child: Image(
                             fit: BoxFit.cover,
-                            image: FileImage(File(file?.path ?? ""))
+                            image: FileImage(File(galleryPhoto?.path ?? ""))
                           )
                       ),
                       Positioned(
@@ -129,54 +213,54 @@ class _FileUploadState extends State<FileUpload> {
 
   Stack UploadIcon() {
     return Stack(
-                  children: [
-                    Positioned(
-                        top: 0, bottom: 0, left: 0, right: 0,
-                        child: Container(
-                          height: 20,
-                          width: 20,
-                          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                          decoration: BoxDecoration(
-                            //
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/images/photoUpload.svg',
-                            color: widget.data['lineColor'],
-                          ),
-                        )
+      children: [
+        Positioned(
+            top: 0, bottom: 0, left: 0, right: 0,
+            child: Container(
+              height: 20,
+              width: 20,
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              decoration: BoxDecoration(
+                //
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: SvgPicture.asset(
+                'assets/images/photoUpload.svg',
+                color: widget.data['lineColor'],
+              ),
+            )
+        ),
+        Positioned(
+            right: 10,
+            bottom: 10,
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: widget.data['palette']['quarternary'],
+                ),
+              ),
+              child: RawMaterialButton(
+                  onPressed: displayCameraOptionPopup,
+                  child: const Text(
+                    '+',
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
                     ),
-                    Positioned(
-                        right: 10,
-                        bottom: 10,
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16)),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: widget.data['palette']['quarternary'],
-                            ),
-                          ),
-                          child: RawMaterialButton(
-                              onPressed: pickImageFromGallery,
-                              child: const Text(
-                                '+',
-                                style: TextStyle(
-                                  fontFamily: 'Nunito',
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                          ),
-                        )
-                    )
-                  ],
-                );
+                  )
+              ),
+            )
+        )
+      ],
+    );
   }
 }
