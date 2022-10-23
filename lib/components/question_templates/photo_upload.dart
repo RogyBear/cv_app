@@ -40,7 +40,10 @@ class _FileUploadState extends State<FileUpload> {
       await _storage.write(key: "photoPath", value: image.path);
 
       final selected = File(image.path);
-      setState(() => galleryPhoto = selected);
+      setState(() {
+        galleryPhoto = selected;
+        showCameraOptionPopup = false;
+      });
     } on PlatformException catch(e) {
     //  TODO: Handle exception.
     }
@@ -98,13 +101,15 @@ class _FileUploadState extends State<FileUpload> {
   Future<void> activateCamera() async {
     WidgetsFlutterBinding.ensureInitialized();
     _cameras = await availableCameras();
-
-    _cameraController = CameraController(_cameras[0], ResolutionPreset.max);
+    _cameraController = CameraController(
+        _cameras[0],
+        ResolutionPreset.max,
+        enableAudio: false
+    );
     _cameraController.initialize().then((_) {
-      // if (!mounted) {
-      //   return;
-      // }
-      setState(() {});
+      setState(() {
+        showCameraOptionPopup = false;
+      });
     }).catchError((Object e) {
       if (e is CameraException) {
         switch (e.code) {
@@ -113,7 +118,6 @@ class _FileUploadState extends State<FileUpload> {
             break;
           default:
             print(e.description);
-            print('Handle other errors.');
             break;
         }
       }
@@ -134,11 +138,9 @@ class _FileUploadState extends State<FileUpload> {
 
   @override
   Widget build(BuildContext context) {
-    if (_cameraController.value.isInitialized) {
-      return MaterialApp(
-        home: CameraPreview(_cameraController),
-      );
-    }
+    // if(mounted && _cameraController.value.isInitialized) {
+    //   return CameraPreview(_cameraController);
+    // }
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(

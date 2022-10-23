@@ -7,7 +7,8 @@ const Map<String, dynamic> educationQuestions = {
   'palette': {
     'primary': yellowGradient,
     'secondary': yellowSecondary,
-    'tertiary': yellowTertiary
+    'tertiary': yellowTertiary,
+    "quarternary": yellowGradient
   },
   'lineColor': yellowLines,
   'icon': "",
@@ -26,10 +27,38 @@ const Map<String, dynamic> educationQuestions = {
     },
     {
       'id': "test2",
-      "type": "basic",
-      'question': "Вкажіть ваш номер телефону",
-      'help':
-          "Тут тобі потрібно ввести номер мобільного телефону, щоб роботодавець міг з тобою зв’язатися.",
+      "type": "custom",
+      "title": "Вкажіть університет, в якому ви навчались",
+      "questions": [
+        // {
+        //   "type": "basic",
+        //   "question": "Назва університету",
+        //   "placeholder": "Наприклад, Національний університет ім. Т. Г. Шевченка"
+        // },
+        {
+          "type": "date",
+          "question": "Коли ви почали навчання?"
+        },
+        {
+          "type": "date",
+          "question": "Коли ви почали навчання?",
+          "checkbox": "Ще навчаюсь"
+        },
+        {
+          "type": "checkbox",
+          "question": "Науковий ступінь",
+          "options": [
+            "Магістр",
+            "Бакалавр"
+          ]
+        },
+        // {
+        //   "type": "basic",
+        //   "question": "Спеціальність",
+        //   "placeholder": "Наприклад, вчитель української мови та літератури"
+        // }
+      ],
+      'help': "Тут тобі потрібно ввести номер мобільного телефону, щоб роботодавець міг з тобою зв’язатися.",
     },
     {
       'id': "test3",

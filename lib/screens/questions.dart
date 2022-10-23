@@ -1,6 +1,7 @@
 import 'package:cv_app/components/fox_head.dart';
 import 'package:cv_app/components/question_templates/basic_question.dart';
 import 'package:cv_app/components/question_templates/confirm_answers.dart';
+import 'package:cv_app/components/question_templates/custom_question.dart';
 import 'package:cv_app/components/question_templates/dropdown_question.dart';
 import 'package:cv_app/components/question_templates/photo_upload.dart';
 import 'package:cv_app/components/question_templates/select_question.dart';
@@ -127,8 +128,16 @@ class _QuestionsState extends State<Questions> {
                           case 'photo':
                             return FileUpload(
                                 data: data['data'],
-                              question: data['data']['questions'][index]
-                                ['question']
+                                question: data['data']['questions'][index]
+                                  ['question']
+                            );
+                          case 'custom':
+                            return CustomQuestion(
+                              data: data['data'],
+                              questions: data['data']['questions'][index]
+                              ['questions'],
+                              title: data['data']['questions'][index]
+                              ['title'],
                             );
                           case 'confirm':
                             return ConfirmAnswers();

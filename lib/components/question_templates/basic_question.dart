@@ -4,11 +4,13 @@ class BasicQuestion extends StatefulWidget {
   final String question;
   final String placeholder;
   final Map<String, dynamic> data;
+  final bool custom;
   const BasicQuestion({
     super.key,
     required this.question,
     required this.placeholder,
-    required this.data
+    required this.data,
+    this.custom = false
   });
 
   @override
@@ -32,7 +34,7 @@ class _BasicQuestionState extends State<BasicQuestion> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              height: 80,
+              height: widget.custom ? 40 : 80,
               child: Text(
             widget.question,
             style: TextStyle(
