@@ -42,7 +42,7 @@ class _DateDropdownQuestionState extends State<DateDropdownQuestion> {
   Widget build(BuildContext context) {
     return
       Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(vertical: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -62,8 +62,7 @@ class _DateDropdownQuestionState extends State<DateDropdownQuestion> {
                 child: Row(
                   children: [
                     Container(
-                        width: 220,
-                        padding: EdgeInsets.symmetric(vertical: 5),
+                        width: 240,
                         child: InputDecorator(
                           decoration: InputDecoration(
                             filled: true,
@@ -169,11 +168,11 @@ class _DateDropdownQuestionState extends State<DateDropdownQuestion> {
                 )
             ),
             if(widget.checkbox != null)
-              DateRadio(
-                  checked,
-                  () => setState(() => checked = !checked),
-                  widget.data,
-                  widget.checkbox
+              CustomCheckbox(
+                checked: checked,
+                title: widget.checkbox ?? "",
+                data: widget.data,
+                onTap: () => setState(() => checked = !checked)
               )
           ],
         ),
@@ -181,34 +180,42 @@ class _DateDropdownQuestionState extends State<DateDropdownQuestion> {
   }
 }
 
-class DateRadio extends StatelessWidget {
-  final bool selected;
-  final updateState;
+class CustomCheckbox extends StatefulWidget {
+  final bool checked;
+  final String title;
   final data;
-  final question;
+  final onTap;
 
-  const DateRadio(
-      this.selected,
-      this.data,
-      this.question,
-      this.updateState,
-      {super.key});
+  const CustomCheckbox({
+    super.key,
+    required this.checked,
+    required this.data,
+    required this.title,
+    required this.onTap
+
+  });
+
+  @override
+  State<CustomCheckbox> createState() => _CustomCheckboxState();
+}
+
+class _CustomCheckboxState extends State<CustomCheckbox> {
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => updateState(),
+      onTap: widget.onTap,
       child: Container(
-          padding: const EdgeInsets.all(20),
-          margin: const EdgeInsets.symmetric(horizontal: 20),
+          margin: const EdgeInsets.symmetric(vertical: 5),
           child: Row(
             children: [
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: data['palette']['primary'][1],
+                    color: widget.data['palette']['primary'][1],
                     width: 1,
                   ),
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 padding: EdgeInsets.all(3),
@@ -216,9 +223,8 @@ class DateRadio extends StatelessWidget {
                   height: 20,
                   width: 20,
                   decoration: BoxDecoration(
-                    //
-                    color: selected
-                        ? data['palette']['primary'][1]
+                    color: widget.checked
+                        ? widget.data['palette']['primary'][1]
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(7),
                   ),
@@ -228,9 +234,9 @@ class DateRadio extends StatelessWidget {
                 width: 15,
               ),
               Text(
-                question,
+                widget.title,
                 style: const TextStyle(
-                  fontSize: 22,
+                  fontSize: 18,
                   fontFamily: 'Nunito',
                   fontWeight: FontWeight.w400,
                   color: Color(0xFF082844),

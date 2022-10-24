@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 
 class SelectQuestion extends StatefulWidget {
   final data;
+  final title;
+  final subtitle;
   final questions;
-  const SelectQuestion({this.data, this.questions, super.key});
+  const SelectQuestion({
+    this.data,
+    this.questions,
+    this.title,
+    this.subtitle,
+    super.key
+  });
 
   @override
   State<SelectQuestion> createState() => _SelectQuestionState();
@@ -20,17 +28,52 @@ class _SelectQuestionState extends State<SelectQuestion> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemBuilder: (context, int index) {
-        return CustomRadioTile(index, _selected, handleState, widget.data,
-            widget.questions[index]);
-      },
-      separatorBuilder: (context, int index) {
-        return SizedBox(
-          height: 10,
-        );
-      },
-      itemCount: widget.questions.length,
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Stack(
+          children: [
+          Container(
+              height: 120,
+              child: Column(
+                children: [
+                  Text(
+                    widget.title,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 28,
+                        fontFamily: 'Nunito',
+                        color: Color(0xFF082844)
+                    ),
+                  ),
+                  Text(
+                    widget.subtitle,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        fontFamily: 'Nunito',
+                        color: Color(0xFF082844)
+                    ),
+                  )
+                ],
+              )
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 110, 0, 0),
+            child: ListView.separated(
+              itemBuilder: (context, int index) {
+                return CustomRadioTile(index, _selected, handleState, widget.data,
+                    widget.questions[index]);
+              },
+              separatorBuilder: (context, int index) {
+                return SizedBox(
+                  height: 10,
+                );
+              },
+              itemCount: widget.questions.length,
+            )
+          )
+        ]
+      )
     );
   }
 }
@@ -52,8 +95,7 @@ class CustomRadioTile extends StatelessWidget {
         stateFunction(index);
       },
       child: Container(
-          padding: EdgeInsets.all(20),
-          margin: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
@@ -91,7 +133,7 @@ class CustomRadioTile extends StatelessWidget {
                 Text(
                   question,
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 18,
                     fontFamily: 'Nunito',
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF082844),

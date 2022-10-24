@@ -29,17 +29,17 @@ class _BasicQuestionState extends State<BasicQuestion> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: widget.custom ? 0 : 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              height: widget.custom ? 40 : 80,
+              height: widget.custom ? 30 : 80,
               child: Text(
             widget.question,
             style: TextStyle(
                 fontWeight: FontWeight.w700,
-                fontSize: 28,
+                fontSize: widget.custom ? 18 : 28,
                 fontFamily: 'Nunito',
                 color: Color(0xFF082844)
             ),

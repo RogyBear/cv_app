@@ -3,6 +3,7 @@ import 'package:cv_app/components/question_templates/basic_question.dart';
 import 'package:cv_app/components/question_templates/confirm_answers.dart';
 import 'package:cv_app/components/question_templates/custom_question.dart';
 import 'package:cv_app/components/question_templates/dropdown_question.dart';
+import 'package:cv_app/components/question_templates/multiple_inputs.dart';
 import 'package:cv_app/components/question_templates/photo_upload.dart';
 import 'package:cv_app/components/question_templates/select_question.dart';
 import 'package:cv_app/services/data.dart';
@@ -122,6 +123,10 @@ class _QuestionsState extends State<Questions> {
                           case 'select':
                             return SelectQuestion(
                               data: data['data'],
+                              title: data['data']['questions'][index]
+                              ['title'],
+                              subtitle: data['data']['questions'][index]
+                              ['subtitle'],
                               questions: data['data']['questions'][index]
                                   ['question'],
                             );
@@ -139,19 +144,21 @@ class _QuestionsState extends State<Questions> {
                               title: data['data']['questions'][index]
                               ['title'],
                             );
+                          case 'multipleInputs':
+                            return MultipleInputs(
+                              questionData: data['data']['questions'][index],
+                              data: data['data'],
+                            );
                           case 'confirm':
                             return ConfirmAnswers();
                           default:
-                            // print(data['data']['questions'][index]['type']);
-                            break;
+                            return Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              width: MediaQuery.of(context).size.width,
+                              child: Text(
+                                  data['data']['questions'][index]['question']),
+                            );
                         }
-                        // HERE IS WHERE THE SWITCH STATEMENT GOES
-                        return Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          width: MediaQuery.of(context).size.width,
-                          child: Text(
-                              data['data']['questions'][index]['question']),
-                        );
                       }),
                 ),
                 Padding(

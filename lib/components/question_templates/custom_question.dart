@@ -63,25 +63,27 @@ class _CustomQuestionState extends State<CustomQuestion> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-              height: 80,
-              child: Text(
-                widget.title,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 28,
-                    fontFamily: 'Nunito',
-                    color: Color(0xFF082844)
-                ),
-              )
-          ),
-          ...displayQuestions()
-        ],
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+                height: 80,
+                child: Text(
+                  widget.title,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 28,
+                      fontFamily: 'Nunito',
+                      color: Color(0xFF082844)
+                  ),
+                )
+            ),
+            ...displayQuestions()
+          ],
+        ),
       ),
     );
   }

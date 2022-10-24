@@ -1,3 +1,4 @@
+import 'package:cv_app/components/question_templates/date_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class CheckboxQuestion extends StatefulWidget {
@@ -16,16 +17,42 @@ class CheckboxQuestion extends StatefulWidget {
 }
 
 class _CheckboxQuestionState extends State<CheckboxQuestion> {
-  late TextEditingController _controller;
+  String checked = "";
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    checked = widget.options[0];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return  Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  height: 30,
+                  child: Text(
+                    widget.question,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        fontFamily: 'Nunito',
+                        color: Color(0xFF082844)
+                    ),
+                  )
+              ),
+              ...widget.options.map((option) => CustomCheckbox(
+                  checked: checked == option,
+                  data: widget.data,
+                  title: option,
+                  onTap: () => setState(() => checked =
+                    checked == option ? "" : option)
+              ))
+            ]
+        )
+    );
   }
 }
