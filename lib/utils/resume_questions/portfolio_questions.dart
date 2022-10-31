@@ -15,34 +15,37 @@ const Map<String, dynamic> portfolioQuestions = {
   'questions': [
     {
       'id': "test1",
-      'question': "Вкажіть ваше ім'я та прізвище",
+      "type": "custom",
+      'title': "Розкажіть про свій проект",
+      'questions': [
+        {
+          "type": "basic",
+          "question": "Назва проекту",
+          "placeholder": "Наприклад, Освітній проект «На Урок»"
+        },
+        {
+          "type": "basic",
+          "question": "Скільки часу тривав проекту?",
+          "placeholder": "Наприклад, 2 місяці"
+        },
+        {
+          "type": "basic",
+          "question": "Які ваші обов’язки на проекті?",
+          "placeholder": "Наприклад, Організовував/-ла щетижневий семінар для вчителів"
+        }
+      ]
     },
     {
       'id': "test2",
-      'question': "Вкажіть ваш номер телефону",
-      'help':
-          "Тут тобі потрібно ввести номер мобільного телефону, щоб роботодавець міг з тобою зв’язатися.",
-    },
-    {
-      'id': "test3",
-      'question': "Вкажіть ваш e-mail",
-    },
-    {
-      'id': "test4",
-      'question': "Оберіть мови, якими ви володієте",
-    },
-    {
-      'id': "test5",
-      'question': "Додайте своє фото",
-    },
-    {
-      'id': "test6",
-      'question': "Вкажіть посаду, на яку ви претендуєте",
-    },
-    {
-      'id': "test7",
-      'question': "Давайте перевіримо ваші відповіді",
-      'confirmation': true,
-    },
+      'type': "custom",
+      'title': "Залиште посилання на своє потрфоліо",
+      'questions': [
+        {
+          "type": "basic",
+          "question": "",
+          "placeholder": "Наприклад, dribbble.com/marichkanasypana"
+        }
+      ]
+    }
   ],
 };

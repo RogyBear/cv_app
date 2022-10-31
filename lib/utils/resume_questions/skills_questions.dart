@@ -7,7 +7,8 @@ const Map<String, dynamic> skillsQuestions = {
   'palette': {
     'primary': blueGradient,
     'secondary': blueSecondary,
-    'tertiary': blueTertiary
+    'tertiary': blueTertiary,
+    'quarternary': yellowGradient
   },
   'lineColor': blueLines,
   'icon': "",
@@ -15,7 +16,10 @@ const Map<String, dynamic> skillsQuestions = {
   'questions': [
     {
       'id': "test1",
-      'question': "Вкажіть ваше ім'я та прізвище",
+      "type": "multipleInputs",
+      'question': "Опишіть 5-7 своїх соціальних навичок",
+      'placeholder': "Наприклад, Здобув І місце у конкурсі  власної поезії",
+      'addText': "Добавити досягнення"
     },
     {
       'id': "test2",

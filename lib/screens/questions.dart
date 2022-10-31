@@ -1,6 +1,10 @@
 import 'package:cv_app/components/fox_head.dart';
 import 'package:cv_app/components/question_templates/basic_question.dart';
+import 'package:cv_app/components/question_templates/confirm_answers.dart';
+import 'package:cv_app/components/question_templates/custom_question.dart';
 import 'package:cv_app/components/question_templates/dropdown_question.dart';
+import 'package:cv_app/components/question_templates/multiple_inputs.dart';
+import 'package:cv_app/components/question_templates/photo_upload.dart';
 import 'package:cv_app/components/question_templates/select_question.dart';
 import 'package:cv_app/services/data.dart';
 import 'package:flutter/material.dart';
@@ -107,39 +111,60 @@ class _QuestionsState extends State<Questions> {
                             return BasicQuestion(
                               question: data['data']['questions'][index]
                                   ['question'],
+                              placeholder: data['data']['questions'][index]
+                                ['placeholder'] ?? "",
                               data: data['data'],
                             );
                           case 'dropdown':
-                            return Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 20,
-                              ),
-                              child: DropdownQuestion(
+                            return DropdownQuestion(
                                 data: data['data'],
-                              ),
+                                items: data['data']['questions'][index]['items']
                             );
                           case 'select':
                             return SelectQuestion(
                               data: data['data'],
+                              title: data['data']['questions'][index]
+                              ['title'],
+                              subtitle: data['data']['questions'][index]
+                              ['subtitle'],
                               questions: data['data']['questions'][index]
                                   ['question'],
                             );
+                          case 'photo':
+                            return FileUpload(
+                                data: data['data'],
+                                question: data['data']['questions'][index]
+                                  ['question']
+                            );
+                          case 'custom':
+                            return CustomQuestion(
+                              data: data['data'],
+                              questions: data['data']['questions'][index]
+                              ['questions'],
+                              title: data['data']['questions'][index]
+                              ['title'],
+                            );
+                          case 'multipleInputs':
+                            return MultipleInputs(
+                              questionData: data['data']['questions'][index],
+                              data: data['data'],
+                            );
+                          case 'confirm':
+                            return ConfirmAnswers();
                           default:
-                            // print(data['data']['questions'][index]['type']);
-                            break;
+                            return Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              width: MediaQuery.of(context).size.width,
+                              child: Text(
+                                  data['data']['questions'][index]['question']),
+                            );
                         }
-                        // HERE IS WHERE THE SWITCH STATEMENT GOES
-                        return Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          width: MediaQuery.of(context).size.width,
-                          child: Text(
-                              data['data']['questions'][index]['question']),
-                        );
                       }),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 20,
+                    vertical: 10
                   ),
                   child: Row(
                     children: [
